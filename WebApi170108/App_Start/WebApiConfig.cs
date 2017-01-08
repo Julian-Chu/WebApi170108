@@ -12,13 +12,13 @@ namespace WebApi170108
     {
         public static void Register(HttpConfiguration config)
         {
-            // Web API configuration and services
+            // Web API configuration and services //關閉預設驗證
             // Configure Web API to use only bearer token authentication.
             config.SuppressDefaultHostAuthentication();
             config.Filters.Add(new HostAuthenticationFilter(OAuthDefaults.AuthenticationType));
 
             // Web API routes
-            config.MapHttpAttributeRoutes();
+            config.MapHttpAttributeRoutes();  //屬性路由
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
