@@ -27,7 +27,9 @@ namespace WebApi170108.Controllers
         }
 
         // GET: api/Products/5
-        [ResponseType(typeof(Product))]
+        
+        [Route("products/{id:int}")] // GET : /products/1
+        [ResponseType(typeof(Product))] //給http helper參考使用 ，產生文件，該方法不確定回傳型別
         public IHttpActionResult GetProduct(int id)
         {
             Product product = db.Product.Find(id);
@@ -39,6 +41,7 @@ namespace WebApi170108.Controllers
             return Ok(product);
         }
 
+        [Route("products/search/{name}")] //GET : /prodcuts/search/will
         [ResponseType(typeof(Product))]
         public IHttpActionResult GetProduct(string id)
         {
