@@ -30,7 +30,7 @@ namespace WebApi170108.Controllers
 
         // GET: api/Products/5
         
-        [Route("{id:int}")] // GET : /products/1
+        [Route("{id:int}", Name ="GetProductById")] // GET : /products/1
         [ResponseType(typeof(Product))] //給http helper參考使用 ，產生文件，該方法不確定回傳型別
         public IHttpActionResult GetProduct(int id)
         {
@@ -168,6 +168,7 @@ namespace WebApi170108.Controllers
 
 
         // POST: api/Products
+        [Route("")]
         [ResponseType(typeof(Product))]
         public IHttpActionResult PostProduct(Product product)
         {
@@ -179,7 +180,7 @@ namespace WebApi170108.Controllers
             db.Product.Add(product);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = product.ProductId }, product);
+            return CreatedAtRoute("GetProductById", new { id = product.ProductId }, product);
         }
 
         // DELETE: api/Products/5
