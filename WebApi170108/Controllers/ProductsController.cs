@@ -12,6 +12,7 @@ using WebApi170108.Models;
 
 namespace WebApi170108.Controllers
 {
+    [RoutePrefix("products")]
     public class ProductsController : ApiController
     {
         private FabricsEntities db = new FabricsEntities();
@@ -21,6 +22,7 @@ namespace WebApi170108.Controllers
             db.Configuration.LazyLoadingEnabled = false; //關閉延遲載入
         }
         // GET: api/Products
+        [Route("")]  //指定走屬性路由
         public IQueryable<Product> GetProduct()
         {
             return db.Product;
@@ -28,7 +30,7 @@ namespace WebApi170108.Controllers
 
         // GET: api/Products/5
         
-        [Route("products/{id:int}")] // GET : /products/1
+        [Route("{id:int}")] // GET : /products/1
         [ResponseType(typeof(Product))] //給http helper參考使用 ，產生文件，該方法不確定回傳型別
         public IHttpActionResult GetProduct(int id)
         {
@@ -56,7 +58,7 @@ namespace WebApi170108.Controllers
         //    return Ok(product);
         //}
 
-        [Route("products/search/{name}")] //GET : /prodcuts/search/will
+        [Route("search/{id}")] //GET : /prodcuts/search/will
         [ResponseType(typeof(Product))]
         [HttpGet] //Assign Get request , but not restful
         public IHttpActionResult SearchProduct(string id)
@@ -70,10 +72,7 @@ namespace WebApi170108.Controllers
             return Ok(product);
         }
 
-
-
-
-
+               
 
 
         // PUT: api/Products/5
