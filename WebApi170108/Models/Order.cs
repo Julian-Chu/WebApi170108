@@ -9,9 +9,10 @@
 
 namespace WebApi170108.Models
 {
+    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
-    
+
     public partial class Order
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -25,8 +26,10 @@ namespace WebApi170108.Models
         public Nullable<System.DateTime> OrderDate { get; set; }
         public Nullable<decimal> OrderTotal { get; set; }
         public string OrderStatus { get; set; }
-    
+
+        [JsonIgnore]
         public virtual Client Client { get; set; }
+        [JsonIgnore]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OrderLine> OrderLine { get; set; }
     }

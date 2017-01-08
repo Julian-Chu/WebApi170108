@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Text;
 using System.Web.Http;
 using System.Web.Http.Description;
 using WebApi170108.Models;
@@ -24,20 +23,44 @@ namespace WebApi170108.Controllers
 
         // GET: api/Clients
         [Route("")]
-        /*[ResponseType(typeof(IQueryable<Client>))]  *///有時不確定回傳type 須加註 供文件參考
-        public IHttpActionResult GetClient()
+        [ResponseType(typeof(IQueryable<Client>))]  
+        public HttpResponseMessage GetClient()   //使用HttpResponseMessage
         {
-            if(!Request.IsLocal())
+            if (!Request.IsLocal())
             {
-                return NotFound();  //使用IHttpActionResult 可控制回傳訊息
+                //return new HttpResponseMessage()
+                //{
+                //    StatusCode = HttpStatusCode.NotFound
+                //};
+                return Request.CreateResponse(HttpStatusCode.NotFound);
             }
-            return Ok(db.Client);
+
+            return new HttpResponseMessage()
+            {
+                StatusCode = HttpStatusCode.OK,
+                Content = new StringContent("HttpResponseMessage", Encoding.GetEncoding("Big5"))
+            };
         }
+
+
+        //[Route("")]
+        //[ResponseType(typeof(IQueryable<Client>))]  //有時不確定回傳type 須加註 供文件參考
+        //public IHttpActionResult GetClient()
+        //{
+        //    if(!Request.IsLocal())
+        //    {
+        //        return NotFound();  //使用IHttpActionResult 可控制回傳訊息
+        //    }
+        //    return Ok(db.Client);
+        //}
+
+        #region
+        //[Route("")]
         //public IQueryable<Client> GetClient()
         //{
         //    return db.Client;
         //}
-
+        #endregion
 
         // GET: api/Clients/5
         [Route("{id:int}")]
@@ -70,7 +93,7 @@ namespace WebApi170108.Controllers
             var day_begin = date.Date;
             var day_after = date.AddDays(1).Date;
 
-            return Ok(orders.Where(p=>p.OrderDate.Value > day_begin && p.OrderDate.Value<day_after));
+            return Ok(orders.Where(p => p.OrderDate.Value > day_begin && p.OrderDate.Value < day_after));
         }
 
         //clients/1/orders/top10
@@ -78,16 +101,10 @@ namespace WebApi170108.Controllers
         [ResponseType(typeof(Order))]
         public IHttpActionResult GetClientOrdersByTop10(int id)
         {
-            var orders = db.Order.Where(p => p.ClientId == id).OrderByDescending(p=>p.OrderDate).Take(10);
+            var orders = db.Order.Where(p => p.ClientId == id).OrderByDescending(p => p.OrderDate).Take(10);
 
             return Ok(orders);
         }
-
-
-
-
-
-
 
         protected override void Dispose(bool disposing)
         {
