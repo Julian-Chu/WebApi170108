@@ -39,6 +39,24 @@ namespace WebApi170108.Controllers
             return Ok(product);
         }
 
+        [ResponseType(typeof(Product))]
+        public IHttpActionResult GetProduct(string id)
+        {
+            Product product = db.Product.Find(id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(product);
+        }
+
+
+
+
+
+
+
         // PUT: api/Products/5
         [ResponseType(typeof(void))]
         public IHttpActionResult PutProduct(int id, Product product)
