@@ -92,7 +92,7 @@ namespace WebApi170108.Controllers
 
             var item = db.Product.Find(id);
 
-            if (!String.IsNullOrEmpty(product.ProductName))
+            if (!String.IsNullOrEmpty(product.ProductName))  //String not nullable檢查方法
             {
                 item.ProductName = product.ProductName;
             }
