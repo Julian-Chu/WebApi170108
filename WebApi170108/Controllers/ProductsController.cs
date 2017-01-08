@@ -41,9 +41,25 @@ namespace WebApi170108.Controllers
             return Ok(product);
         }
 
+
+
+        //[Route("products/search/{name}")] //GET : /prodcuts/search/will
+        //[ResponseType(typeof(Product))]
+        //public IHttpActionResult GetProduct(string id)
+        //{
+        //    Product product = db.Product.Find(id);
+        //    if (product == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    return Ok(product);
+        //}
+
         [Route("products/search/{name}")] //GET : /prodcuts/search/will
         [ResponseType(typeof(Product))]
-        public IHttpActionResult GetProduct(string id)
+        [HttpGet] //Assign Get request , but not restful
+        public IHttpActionResult SearchProduct(string id)
         {
             Product product = db.Product.Find(id);
             if (product == null)
